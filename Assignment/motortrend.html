@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>1.0 Executive Summary</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>1.0 Executive Summary</h1>
+
+<p>For your car to be able to get from point A to point B without having to stay trudging along in first gear, it needs a working transmission. The transmission allows the vehicle to change gears, thereby transferring power from the engine to the drive axle in the most efficient way possible. It does this by varying the gear ratio. In lower gears, this increases available power while reducing speed. Higher gears, on the other hand, reduce power and increase speed. This enables cars to distribute power and speed in the most efficient way for any given situation. But whilst everyone agrees that a transmission is absolutely vital to the inner workings of any car, there is no general consensus regarding what kind of transmission is better-automatic or manual.This document shows outcome of the studies done. </p>
+
+<h1>2.0 Data analysis</h1>
+
+<p><code>mtcars</code> dataset was used for the analysis. It comprises 10 aspects of automobile design and performance for 32 automobiles.</p>
+
+<pre><code class="r"># factor some variables
+mtcars$cyl &lt;- factor(mtcars$cyl)
+mtcars$vs &lt;- factor(mtcars$vs)
+mtcars$am &lt;- factor(mtcars$am)
+mtcars$gear &lt;- factor(mtcars$gear)
+mtcars$carb &lt;- factor(mtcars$carb)
+str(mtcars)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : Factor w/ 3 levels &quot;4&quot;,&quot;6&quot;,&quot;8&quot;: 2 2 1 2 3 2 3 1 1 2 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 1 2 2 1 2 1 2 2 2 ...
+##  $ am  : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 2 2 2 1 1 1 1 1 1 1 ...
+##  $ gear: Factor w/ 3 levels &quot;3&quot;,&quot;4&quot;,&quot;5&quot;: 2 2 2 1 1 1 1 2 2 2 ...
+##  $ carb: Factor w/ 6 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 4 4 1 1 2 1 4 2 2 4 ...
+</code></pre>
+
+<p>The following boxplot shows the relation between the transmission type and the miles per gallon (MPG).</p>
+
+<pre><code class="r">library(plyr)
+library(ggplot2)
+# Rename the levels of transmission types
+transmission &lt;- revalue(mtcars$am, c(&#39;0&#39;=&quot;automatic&quot;, &#39;1&#39;=&quot;manual&quot;))
+ggplot(mtcars, aes(x=transmission, y=mpg, fill=transmission)) +
+    geom_boxplot() +
+    xlab(&quot;Transmission type&quot;) +
+    ylab(&quot;Miles per gallon&quot;)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"> </p>
+
+<p>It suggests a clear difference on fuel consumption between automatic
+and manual transmission cars. Below is the model to explain the MPG
+variability with the transmission type <em>only</em>.</p>
+
+<pre><code class="r">fit1 &lt;- lm(mpg ~ am, data=mtcars)
+summary(fit1)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ am, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -9.3923 -3.0923 -0.2974  3.2439  9.5077 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   17.147      1.125  15.247 1.13e-15 ***
+## am1            7.245      1.764   4.106 0.000285 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 4.902 on 30 degrees of freedom
+## Multiple R-squared:  0.3598, Adjusted R-squared:  0.3385 
+## F-statistic: 16.86 on 1 and 30 DF,  p-value: 0.000285
+</code></pre>
+
+<p>Although coefficients for both intercept and the transmission type are
+significant, the model fit using <em>only</em> transmission type explains only
+35.9798943% of the MPG variation.</p>
+
+<p>Before making any conclusions on the effect of transmission type on fuel
+efficiency, we look at the variances between several variables in the dataset.</p>
+
+<pre><code class="r">pairs(mtcars, panel=function(x,y) {
+    points(x, y)
+    abline(lm(y ~ x), col=&quot;red&quot;)
+})
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4"> </p>
+
+<p>Based on the pairs plot above, several variables seem to have high
+correlation with the <code>mpg</code> variable. Hence, we build an initial model
+using all variables and select the model with the best subset of
+predictors using stepwise backward elimination and forward selection.</p>
+
+<pre><code class="r">initial_model &lt;- lm(mpg ~ ., data=mtcars)
+best_model &lt;- step(initial_model, direction=&quot;both&quot;, trace=0)
+summary(best_model)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ cyl + hp + wt + am, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.9387 -1.2560 -0.4013  1.1253  5.0513 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 33.70832    2.60489  12.940 7.73e-13 ***
+## cyl6        -3.03134    1.40728  -2.154  0.04068 *  
+## cyl8        -2.16368    2.28425  -0.947  0.35225    
+## hp          -0.03211    0.01369  -2.345  0.02693 *  
+## wt          -2.49683    0.88559  -2.819  0.00908 ** 
+## am1          1.80921    1.39630   1.296  0.20646    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.41 on 26 degrees of freedom
+## Multiple R-squared:  0.8659, Adjusted R-squared:  0.8401 
+## F-statistic: 33.57 on 5 and 26 DF,  p-value: 1.506e-10
+</code></pre>
+
+<pre><code class="r">par(mfrow = c(2,2))
+plot(best_model)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-5-1.png" alt="plot of chunk unnamed-chunk-5"> </p>
+
+<p>The final model contains four predictors, <code>cyl</code> (number of cylinders),
+<code>hp</code> (horsepower), <code>weight</code> (weight) and <code>am</code> (transmission type). This
+model explains the 86.5879872% of the MPG
+variation. The number of cylinders, weight and horsepower  significantly
+contribute to the accuracy of the model while the transmission has no effect
+on the fuel consumption (\(\alpha=0.05\)). Also the residual plots show that
+the distribution of residuals seem to be
+normally distributed and not depending on fitted values.</p>
+
+<h1>3.0 Results</h1>
+
+<p>The data analysis on <code>mtcars</code> dataset from 1973 reveals some interesting
+points.</p>
+
+<ul>
+<li>If a car has 6 cylinder or 8 cylinder, rather than 4, the fuel consumption
+increases by 3.0313445 and
+2.1636753 MPG, respectively.</li>
+<li>One unit of increase on gross horsepower results
+0.0321094 less MPG, an increase on the fuel
+consumption.</li>
+<li>1000 lb increase on the weight of a car, everything else same, yields
+2.4968294 less MPG, again an increase on the
+fuel consumption.</li>
+</ul>
+
+<p>The <code>mtcars</code> dataset used for this analysis comprises data for 1973-1974
+models. This analysis was not able to find any significant link between the
+transmission type and fuel consumption. For modern cars, with much more
+efficient automatic transmission system, it is less likely that having
+a stick shift car will save you any money.</p>
+
+</body>
+
+</html>
